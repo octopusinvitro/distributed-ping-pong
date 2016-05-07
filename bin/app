@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'connection'
+require 'node_factory'
+require 'parsers/arguments'
+require 'ping_pong'
+require 'ui'
+
+options = Parsers::Arguments.new.parse(ARGV)
+factory = NodeFactory.new(options)
+
+ui = UI.new
+connection = Connection.new(ui, 5)
+
+PingPong.new(factory, connection, ui).play
